@@ -1,0 +1,64 @@
+#SELFIE {
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-color:rgba(0, 0, 0, 0.7);
+  display:none;
+}
+
+#SELFIE.shown {
+  display:block;
+}
+
+#SELFIE .window {
+  position:absolute;
+  width: 400px;
+  height: 400px;
+  top: calc((100% - 400px) / 2);
+  left: calc((100% - 400px) / 2);
+  box-sizing:border-box;
+  border: 10px solid #FFF;
+  background-color: Black;
+  padding:20px;
+  text-align:center;
+  border-radius: 20px;
+  display:none;
+  flex-direction:column;
+  justify-content: space-around;
+}
+
+#SELFIE .window.shown {
+  display: flex;
+}
+
+#SELFIE .message {
+  font-size: 30px;
+  font-weight:bold;
+  color: #FFF;
+  height:60px;
+}
+
+#SELFIE .count {
+  font-size:240px;
+  font-weight:bold;
+  color:#FFF;
+  height: 240px;
+  line-height:100%;
+}
+
+#SELFIE .result {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  box-sizing: border-box;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display:none;
+}
+
+#SELFIE .result.shown {
+  display:block;
+}

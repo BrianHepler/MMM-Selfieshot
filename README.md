@@ -90,7 +90,7 @@ sendMail: {
 
 ## How to use
 1. by `notification` **SELFIE_SHOOT**
-Your other module can make an order to take a picture (Button, Voice Commander, Sensors,...)
+- Your other module can make an order to take a picture (Button, Voice Commander, Sensors,...)
 ```js
 this.sendNotification("SELFIE_SHOOT")
 //or

@@ -26,12 +26,14 @@ module.exports = NodeHelper.create({
       }
     }
     if (payload.useWebEndpoint) {
-      log("Web server endpoint is activated:", "/selfie [GET]")
+      log("Web server endpoint is activated:", "/selfie [POST]")
       this.expressApp.use(bodyParser.json())
   		this.expressApp.use(bodyParser.urlencoded({extended: true}))
-      this.expressApp.get("/selfie", (req, res) => {
+      this.expressApp.post("/selfie", (req, res) => {
         log("External request arrives from", req.ip)
-        this.shoot({ext:"WEB"})
+        this.sendSocketNotification("WEB_REQUEST", req.body)
+        console.log(req.body)
+        //this.shoot({ext:"WEB"})
         res.status(200).send({status: 200})
       })
     }
@@ -97,8 +99,7 @@ module.exports = NodeHelper.create({
       this.sendSocketNotification("SHOOT_RESULT", {
         path: data,
         uri: uri,
-        session: (payload.session) ? payload.session : null,
-        ext: (payload.ext) ? payload.ext : null,
+        session: payload.session
       })
       this.sendMail(data)
     })

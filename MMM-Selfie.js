@@ -11,7 +11,8 @@ Module.register("MMM-Selfie", {
     shootCountdown: 5,
     displayCountdown: true,
     displayResult: true,
-    playShutter: "shutter.mp3",
+    playShutter: true,
+    shutterSound: "shutter.mp3",
     useWebEndpoint: true,
     resultDuration: 1000 * 5,
     sendTelegramBot: true,
@@ -58,17 +59,18 @@ Module.register("MMM-Selfie", {
 
   cmdSelfie: function(command, handler) {
     var countdown = null
-    if (Number(handler.args)) countdown = Number(handler.args)
+    if (handler.args) countdown = handler.args
+    if (!countdown) countdown = this.config.shootCountdown
     var session = Date.now()
     this.session[session] = handler
-    this.shoot(countdown, session, "TELBOT")
+    this.shoot({shootCountdown:countdown}, {key:session, ext:"TELBOT"})
   },
 
-  cmdSelfieResult: function(session, path) {
-    var handler = this.session[session]
+  cmdSelfieResult: function(key, path) {
+    var handler = this.session[key]
     handler.reply("PHOTO_PATH", path)
-    this.session[session] = null
-    delete this.session[session]
+    this.session[key] = null
+    delete this.session[key]
   },
 
   cmdEmptySelfie: function(command, handler) {
@@ -98,7 +100,7 @@ Module.register("MMM-Selfie", {
     var shutter = document.createElement("audio")
     shutter.classList.add("shutter")
     if (this.config.playShutter) {
-      shutter.src = "modules/MMM-Selfie/" + this.config.playShutter
+      shutter.src = "modules/MMM-Selfie/" + this.config.shutterSound
     }
     dom.appendChild(shutter)
     var result = document.createElement("result")
@@ -111,8 +113,8 @@ Module.register("MMM-Selfie", {
     if (noti == "SHOOT_RESULT") {
       this.postShoot(payload)
     }
-    if (noti == "SELFIE_EMPTY_STORE") {
-      this.sendSocketNotification("EMPTY")
+    if (noti == "WEB_REQUEST") {
+      this.shoot(payload)
     }
   },
 
@@ -122,22 +124,30 @@ Module.register("MMM-Selfie", {
       //this.shoot()
     }
     if (noti == "SELFIE_SHOOT") {
-      var countdown = (payload.countdown) ? payload.countdown : null
-      var session = null
-      var ext = null
-      if (typeof payload.callback == "function") {
-        session = Date.now() + Math.round(Math.random() * 1000)
-        this.session[session] = payload.callback
-        ext = "CALLBACK"
+      var session = {}
+      var pl = {
+        option: {},
+        callback:null,
       }
-      this.shoot(countdown, session, ext)
+      pl = Object.assign({}, pl, payload)
+      if (typeof pl.callback == "function") {
+        key = Date.now() + Math.round(Math.random() * 1000)
+        this.session[key] = pl.callback
+        session["key"] = key
+        session["ext"] = "CALLBACK"
+      }
+      this.shoot(pl.option, session)
+    }
+    if (noti == "SELFIE_EMPTY_STORE") {
+      this.sendSocketNotification("EMPTY")
     }
   },
 
-  shoot: function(countdown=null, session=null, ext=null) {
-    var showing = this.config.displayCountdown
-    var sound = this.config.playShutter
-    countdown = (countdown) ? countdown : this.config.shootCountdown
+  shoot: function(option={}, session={}) {
+    var showing = (option.hasOwnProperty("displayCountdown")) ? option.displayCountdown : this.config.displayCountdown
+    var sound = (option.hasOwnProperty("playShutter")) ? option.playShutter : this.config.playShutter
+    var countdown = (option.hasOwnProperty("shootCountdown")) ? option.shootCountdown : this.config.shootCountdown
+    if (option.hasOwnProperty("displayResult")) session["displayResult"] = option.displayResult
     var con = document.querySelector("#SELFIE")
     if (showing) con.classList.toggle("shown")
     var win = document.querySelector("#SELFIE .window")
@@ -146,7 +156,10 @@ Module.register("MMM-Selfie", {
       var c = document.querySelector("#SELFIE .count")
       c.innerHTML = count
       if (count < 0) {
-        this.sendSocketNotification("SHOOT", {session:session, ext:ext})
+        this.sendSocketNotification("SHOOT", {
+          option: option,
+          session: session
+        })
         var shutter = document.querySelector("#SELFIE .shutter")
         if (sound) shutter.play()
         if (showing) win.classList.toggle("shown")
@@ -163,6 +176,34 @@ Module.register("MMM-Selfie", {
 
   postShoot: function(result) {
     var showing = this.config.displayResult
+    var at = false
+    if (result.session) {
+      if (result.session.hasOwnProperty("displayResult")) showing = result.session.displayResult
+      if (result.session.ext == "TELBOT") {
+        at = true
+        this.cmdSelfieResult(result.session.key, result.path)
+      }
+      if (result.session.ext == "CALLBACK") {
+        if (this.session.hasOwnProperty(result.session.key)) {
+          callback = this.session[result.session.key]
+          callback({
+            path: result.path,
+            uri: result.uri
+          })
+          this.session[result.session.key] = null
+          delete this.session[result.session.key]
+        }
+      }
+    } else {
+
+    }
+    if (this.config.sendTelegramBot && !at) {
+      this.sendNotification("TELBOT_TELL_ADMIN", {
+        type: "PHOTO_PATH",
+        path: result.path
+      })
+      this.sendNotification("TELBOT_TELL_ADMIN", "New Selfie")
+    }
     var con = document.querySelector("#SELFIE")
     if (showing) con.classList.toggle("shown")
     var rd = document.querySelector("#SELFIE .result")
@@ -172,29 +213,5 @@ Module.register("MMM-Selfie", {
       if (showing) rd.classList.toggle("shown")
       if (showing) con.classList.toggle("shown")
     }, this.config.resultDuration)
-    if (result.session) {
-      if (result.ext == "TELBOT") {
-        this.cmdSelfieResult(result.session, result.path)
-      }
-      if (result.ext == "CALLBACK") {
-        if (this.session.hasOwnProperty(result.session)) {
-          callback = this.session[result.session]
-          callback({
-            path: result.path,
-            uri: result.uri
-          })
-          this.session[result.session] = null
-          delete this.session[result.session]
-        }
-      }
-    } else {
-      if (this.config.sendTelegramBot) {
-        this.sendNotification("TELBOT_TELL_ADMIN", {
-          type: "PHOTO_PATH",
-          path: result.path
-        })
-        this.sendNotification("TELBOT_TELL_ADMIN", "New Selfie")
-      }
-    }
   },
 })

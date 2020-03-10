@@ -78,7 +78,7 @@ sendMail: {
     }
   },
   message: {
-    from: "youremail@gmail.com"
+    from: "youremail@gmail.com",
     to: "who@where.com",
     subject: "Selfie",
     text: "New selfie.",

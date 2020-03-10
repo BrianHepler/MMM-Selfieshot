@@ -1,5 +1,5 @@
 # MMM-Selfieshot
-Taking a Selfie with USB cam on MagicMirror.
+Taking a Selfie with USB cam on MagicMirror. (Pi CAM will be supported later.)
 
 ## Screenshot
 ![](https://raw.githubusercontent.com/eouia/MMM-Selfieshot/master/screenshot.png)

@@ -26,14 +26,12 @@ module.exports = NodeHelper.create({
       }
     }
     if (payload.useWebEndpoint) {
-      log("Web server endpoint is activated:", "/selfie [POST]")
+      log("Web server endpoint is activated:", `/${payload.useWebEndpoint} [POST]`)
       this.expressApp.use(bodyParser.json())
   		this.expressApp.use(bodyParser.urlencoded({extended: true}))
-      this.expressApp.post("/selfie", (req, res) => {
+      this.expressApp.post("/" + payload.useWebEndpoint, (req, res) => {
         log("External request arrives from", req.ip)
         this.sendSocketNotification("WEB_REQUEST", req.body)
-        console.log(req.body)
-        //this.shoot({ext:"WEB"})
         res.status(200).send({status: 200})
       })
     }

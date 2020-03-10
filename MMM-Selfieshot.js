@@ -1,6 +1,6 @@
-Module.register("MMM-Selfie", {
+Module.register("MMM-Selfieshot", {
   defaults: {
-    debug: true,
+    debug: false,
     storePath: "./photos",
     width:1280,
     height:720, // In some webcams, resolution ratio might be fixed so these values might not be applied.
@@ -13,7 +13,7 @@ Module.register("MMM-Selfie", {
     displayResult: true,
     playShutter: true,
     shutterSound: "shutter.mp3",
-    useWebEndpoint: true,
+    useWebEndpoint: "selfie", // It willl become `https://YOUR_MM_IP_OR_DOMAIN::PORT/selfie`
     resultDuration: 1000 * 5,
     sendTelegramBot: true,
     sendMail: null, // or your email config (option for nodemailer https://nodemailer.com/about/)
@@ -41,7 +41,7 @@ Module.register("MMM-Selfie", {
   },
 
   getStyles: function() {
-    return ["MMM-Selfie.css"]
+    return ["MMM-Selfieshot.css"]
   },
 
   getCommands: function(commander) {
@@ -100,7 +100,7 @@ Module.register("MMM-Selfie", {
     var shutter = document.createElement("audio")
     shutter.classList.add("shutter")
     if (this.config.playShutter) {
-      shutter.src = "modules/MMM-Selfie/" + this.config.shutterSound
+      shutter.src = "modules/MMM-Selfieshot/" + this.config.shutterSound
     }
     dom.appendChild(shutter)
     var result = document.createElement("result")
@@ -207,7 +207,7 @@ Module.register("MMM-Selfie", {
     var con = document.querySelector("#SELFIE")
     if (showing) con.classList.toggle("shown")
     var rd = document.querySelector("#SELFIE .result")
-    rd.style.backgroundImage = `url(modules/MMM-Selfie/photos/${result.uri})`
+    rd.style.backgroundImage = `url(modules/MMM-Selfieshot/photos/${result.uri})`
     if (showing) rd.classList.toggle("shown")
     setTimeout(()=>{
       if (showing) rd.classList.toggle("shown")

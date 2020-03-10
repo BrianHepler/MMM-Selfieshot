@@ -1,4 +1,4 @@
-# MMM-Selfie
+# MMM-Selfieshot
 Taking a Selfie with USB cam on MagicMirror.
 
 
@@ -17,8 +17,8 @@ brew install imagesnap
 ### Install
 ```sh
 cd <YOUR_MAGIC_MIRROR_DIRECTORY>/modules
-git clone https://github.com/eouia/MMM-Selfie
-cd MMM-Selfie
+git clone https://github.com/eouia/MMM-Selfieshot
+cd MMM-Selfieshot
 npm install
 ```
 
@@ -29,7 +29,7 @@ npm install
 ```js
 {
 	disabled: false,
-	module: "MMM-Selfie",
+	module: "MMM-Selfieshot",
 	config: {}
 }
 ```
@@ -51,7 +51,7 @@ displayCountdown: true,
 displayResult: true,
 playShutter: true,
 shutterSound: "shutter.mp3",
-useWebEndpoint: true, // You can activate this module with external HTTP method.
+useWebEndpoint: "selfie", // This will activate 'https://YOUR_MM_IP_OR_DOMAIN:PORT/selfie [POST]' as web API endpoint.
 resultDuration: 1000 * 5,
 sendTelegramBot: true,
 sendMail: null, // or your email config (option for nodemailer https://nodemailer.com/about/)
@@ -121,17 +121,16 @@ this.sendNotification("SELFIE_SHOOT", {
 - `/emptyselfie` : Remove all photos
 
 3. by `HTTP Request`
-- With `useWebEndpoint:true`, HTTP request via `https://YOUR_MIRROR_IP_OR_DOMAIN/selfie` could be obtained.
+- This will activate 'https://YOUR_MM_IP_OR_DOMAIN:PORT/selfie [POST]' as web API endpoint.
+- If you don't need this, set it to `null`.
 
-For example;
+CURL example;
 ```sh
-curl -d '{
-  \ "shootCountdown":3, "displayCountdown":false, "playShutter":false, "displayResult":false
-  \ }' -H "Content-Type: application/json" -X POST http://localhost:8080/selfie
+curl -d '{"shootCountdown":7}' -H "Content-Type: application/json" -X POST http://localhost:8080/selfie
 ```
-You can use this for IFTTT or other program out of MagicMirror.
+You can use this feature for IFTTT or other program out of MagicMirror.
 
-4. Photos will be stored in `/photos` directory. You can use `rsync` or any tools to share/send/sync with others.
+4. Photos will be stored in `/photos` directory. You can use `rsync` or any tools to share/send/sync with other storage. (Ask to your network/system admin.)
 
 5. (**NOT IMPLEMENT YET / TODO**) by `MMM-GooglePhotos`
 - Photos will be uploaded to Google Photos album automatically.

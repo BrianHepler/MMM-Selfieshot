@@ -5,6 +5,10 @@ Taking a Selfie with USB cam on MagicMirror. (Pi CAM will be supported later.)
 ![](https://raw.githubusercontent.com/eouia/MMM-Selfieshot/master/screenshot.png)
 
 
+## New Updates
+**`[1.0.1] - 2020-03-23`**
+- Added: Can upload photo to specific google photos via MMM-GooglePhotos(> v2.0.0)
+
 ## Installation
 ### Dependencies
 1. For Raspbian / Linux
@@ -16,6 +20,7 @@ sudo apt-get install fswebcam
 ```sh
 brew install imagesnap
 ```
+
 
 ### Install
 ```sh
@@ -135,11 +140,9 @@ You can use this feature for IFTTT or other program out of MagicMirror.
 
 4. Photos will be stored in `/photos` directory. You can use `rsync` or any tools to share/send/sync with other storage. (Ask to your network/system admin.)
 
-5. (**NOT IMPLEMENT YET / TODO**) by `MMM-GooglePhotos`
+5. by `MMM-GooglePhotos`
 - Photos will be uploaded to Google Photos album automatically.
-- I'll implement this feature someday after rebuilding `MMM-GooglePhotos`.
 
 
 ## TODO
-- Upload to Google Photos album
 - Native Pi camera support. (I have no pi camera at this moment, so I can't implement. Or, any PR will be welcome.)

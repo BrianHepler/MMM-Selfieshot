@@ -1,21 +1,21 @@
 {
-  "name": "mmm-selfie",
-  "version": "1.0.0",
+  "name": "MMM-Selfieshot",
+  "version": "1.0.1",
   "description": "(Under development)",
-  "main": "MMM-Selfie.js",
+  "main": "MMM-Selfieshot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eouia/MMM-Selfie.git"
+    "url": "git+https://github.com/eouia/MMM-Selfieshot.git"
   },
   "author": "eouia0819@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eouia/MMM-Selfie/issues"
+    "url": "https://github.com/eouia/MMM-Selfieshot/issues"
   },
-  "homepage": "https://github.com/eouia/MMM-Selfie#readme",
+  "homepage": "https://github.com/eouia/MMM-Selfieshot#readme",
   "dependencies": {
     "node-webcam": "^0.5.0",
     "nodemailer": "^6.4.4"

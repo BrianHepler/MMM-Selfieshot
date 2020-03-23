@@ -204,6 +204,7 @@ Module.register("MMM-Selfieshot", {
       })
       this.sendNotification("TELBOT_TELL_ADMIN", "New Selfie")
     }
+    this.sendNotification("GPHOTO_UPLOAD", result.path)
     var con = document.querySelector("#SELFIE")
     if (showing) con.classList.toggle("shown")
     var rd = document.querySelector("#SELFIE .result")

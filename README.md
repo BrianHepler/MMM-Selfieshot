@@ -6,6 +6,12 @@ Taking a Selfie with USB cam on MagicMirror. (Pi CAM will be supported later.)
 
 
 ## New Updates
+**`[1.0.2] - 2020-03-23`**
+- Added: Feature for showing last taken selfie.
+    - TelegramBot command `/lastselfie`
+		- Notification: `SELFIE_LAST`
+- Added: Notification for shooting result. `SELFIE_RESULT` with payload `{uri, path}`		
+
 **`[1.0.1] - 2020-03-23`**
 - Added: Can upload photo to specific google photos via MMM-GooglePhotos(> v2.0.0)
 
@@ -121,12 +127,13 @@ this.sendNotification("SELFIE_SHOOT", {
 })
 ```
 - `SELFIE_EMPTY_STORE` : You can remove all photos in store directory.
-
+- `SELFIE_LAST` : You can display last photo taken on screen.
 
 
 2. by `MMM-TelegramBot`
 - `/selfie` or `/selfie 5` : Take a photo (with countdown)
 - `/emptyselfie` : Remove all photos
+- `/lastselfie` : Display last the last photo taken on screen and telegram.
 
 3. by `HTTP Request`
 - This will activate 'https://YOUR_MM_IP_OR_DOMAIN:PORT/selfie [POST]' as web API endpoint.

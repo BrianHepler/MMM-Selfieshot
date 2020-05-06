@@ -48,12 +48,17 @@ Module.register("MMM-Selfieshot", {
     commander.add({
       command: 'selfie',
       callback: 'cmdSelfie',
-      description: "Take a selfie",
+      description: "Take a selfie.",
     })
     commander.add({
       command: 'emptyselfie',
       callback: 'cmdEmptySelfie',
       description: "Remove all selfie photos."
+    })
+    commander.add({
+      command: 'lastselfie',
+      callback: 'cmdLastSelfie',
+      description: 'Display the last selfie shot taken.'
     })
   },
 
@@ -73,6 +78,15 @@ Module.register("MMM-Selfieshot", {
     delete this.session[key]
   },
 
+  cmdLastSelfie: function(command, handler) {
+    if (this.lastPhoto) {
+      handler.reply("PHOTO_PATH", this.lastPhoto.path)
+      this.showLastPhoto(this.lastPhoto)
+    } else {
+      handler.reply("TEXT", "Couldn't find the last selfie.")
+    }
+  },
+
   cmdEmptySelfie: function(command, handler) {
     this.sendSocketNotification("EMPTY")
     handler.reply("TEXT", "done.")
@@ -81,6 +95,7 @@ Module.register("MMM-Selfieshot", {
   start: function() {
     this.session = {}
     this.sendSocketNotification("INIT", this.config)
+    this.lastPhoto = null
   },
 
   prepare: function() {
@@ -141,6 +156,9 @@ Module.register("MMM-Selfieshot", {
     if (noti == "SELFIE_EMPTY_STORE") {
       this.sendSocketNotification("EMPTY")
     }
+    if (noti == "SELFIE_LAST") {
+      this.showLastPhoto(this.lastPhoto)
+    }
   },
 
   shoot: function(option={}, session={}) {
@@ -175,7 +193,7 @@ Module.register("MMM-Selfieshot", {
   },
 
   postShoot: function(result) {
-    var showing = this.config.displayResult
+
     var at = false
     if (result.session) {
       if (result.session.hasOwnProperty("displayResult")) showing = result.session.displayResult
@@ -204,7 +222,15 @@ Module.register("MMM-Selfieshot", {
       })
       this.sendNotification("TELBOT_TELL_ADMIN", "New Selfie")
     }
+    this.sendNotification("SELFIE_RESULT", result)
     this.sendNotification("GPHOTO_UPLOAD", result.path)
+    this.lastPhoto = result
+    this.showLastPhoto(result)
+  },
+
+
+  showLastPhoto: function(result) {
+    var showing = this.config.displayResult
     var con = document.querySelector("#SELFIE")
     if (showing) con.classList.toggle("shown")
     var rd = document.querySelector("#SELFIE .result")
@@ -214,5 +240,5 @@ Module.register("MMM-Selfieshot", {
       if (showing) rd.classList.toggle("shown")
       if (showing) con.classList.toggle("shown")
     }, this.config.resultDuration)
-  },
+  }
 })

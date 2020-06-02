@@ -2,7 +2,7 @@ const NodeWebcam = require( "node-webcam" );
 const moment = require("moment");
 const path = require("path");
 const exec = require("child_process").exec;
-var nodemailer = require('nodemailer');
+var nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 
 var log = () => {
@@ -10,7 +10,6 @@ var log = () => {
 };
 
 var NodeHelper = require("node_helper");
-
 
 module.exports = NodeHelper.create({
 	start: function() {
@@ -127,4 +126,5 @@ module.exports = NodeHelper.create({
 		} else {
 			return;
 		}
+	}
 });

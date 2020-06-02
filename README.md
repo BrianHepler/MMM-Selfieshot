@@ -6,6 +6,9 @@ Taking a Selfie with USB cam on MagicMirror. (Pi CAM will be supported later.)
 
 
 ## New Updates
+**`[1.0.3] - 2020-06-02`**
+- Added: Feature to put a touch-enabled icon to take a selfie.
+
 **`[1.0.2] - 2020-03-23`**
 - Added: Feature for showing last taken selfie.
     - TelegramBot command `/lastselfie`
@@ -38,13 +41,25 @@ npm install
 
 ## Configuration
 ### Simple
-> This module doesn't need `position` of module.
+> This module doesn't need `position` of module unless you're using the touch button.
 
 ```js
 {
 	disabled: false,
 	module: "MMM-Selfieshot",
 	config: {}
+}
+```
+### Touch-Enabled
+To place a button on the mirror that you can click or touch, you will have to include a position and the name of the [Font Awesome](https://fontawesome.com/icons?d=gallery&q=selfie) icon.
+```js
+{
+  disabled: false,
+  module: "MMM-Selfieshot",
+  position: "bottom_left",
+  config: {
+    displayButton: "portrait"
+  }
 }
 ```
 

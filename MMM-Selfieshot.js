@@ -11,7 +11,7 @@ Module.register("MMM-Selfieshot", {
 		shootCountdown: 5,
 		displayCountdown: true,
 		displayResult: true,
-		displayButton: null,
+		displayButton: null, // null = no button or name of FontAwesome icon
 		playShutter: true,
 		shutterSound: "shutter.mp3",
 		useWebEndpoint: "selfie", // It willl become `https://YOUR_MM_IP_OR_DOMAIN::PORT/selfie`
@@ -102,12 +102,12 @@ Module.register("MMM-Selfieshot", {
 	},
 
 	getDom: function() {
-		if (this.config.displayButton) {
+		if (this.config.displayButton != null) {
 			var wrapper = document.createElement("div");
 			// wrapper.innerHTML = "Take a Selfie";
 
 			var img = document.createElement("span");
-			img.className = "fa fa-portrait fa-large";
+			img.className = "fa fa-" + this.config.displayButton + " fa-large";
 			img.classList.add("large");
 
 			var session = {};

@@ -42,7 +42,7 @@ Module.register("MMM-Selfieshot", {
 	},
 
 	getStyles: function() {
-		return ["MMM-Selfieshot.css"];
+		return ["MMM-Selfieshot.css", "font-awesome.css"];
 	},
 
 	getCommands: function(commander) {
@@ -103,20 +103,17 @@ Module.register("MMM-Selfieshot", {
 
 	getDom: function() {
 		if (this.config.displayButton) {
-			if (this.config.debug) { console.log("building selfie button"); }
 			var wrapper = document.createElement("div");
+			// wrapper.innerHTML = "Take a Selfie";
 
-			wrapper.innerHTML = "Take a Selfie";
+			var img = document.createElement("span");
+			img.className = "fa fa-portrait fa-large";
+			img.classList.add("large");
+
 			var session = {};
-			wrapper.addEventListener("click", () => this.shoot(this.config, session));
-			// wrapper.addEventListener("click", function(this) {
-			// 	console.log("Clicky clicky");
-			// 	this.sendSocketNotification("SHOOT", this.config);
-				
-			// });
-
-			// }
-				return wrapper;
+			img.addEventListener("click", () => this.shoot(this.config, session));
+			wrapper.appendChild(img);
+			return wrapper;
 		}
 	},
 

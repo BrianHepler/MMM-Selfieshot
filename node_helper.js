@@ -11,6 +11,7 @@ var log = () => {
 
 var NodeHelper = require("node_helper");
 
+
 module.exports = NodeHelper.create({
 	start: function() {
 		this.devices = [];
@@ -60,7 +61,7 @@ module.exports = NodeHelper.create({
 	},
 
 	socketNotificationReceived: function(noti, payload) {
-    if (payload.debug) log("Notification received: " + noti);
+		if (payload.debug) log("Notification received: " + noti);
 		if (noti == "INIT") {
 			this.initialize(payload);
 		}
@@ -126,5 +127,4 @@ module.exports = NodeHelper.create({
 		} else {
 			return;
 		}
-	}
 });

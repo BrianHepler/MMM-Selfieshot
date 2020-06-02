@@ -132,14 +132,14 @@ Module.register("MMM-Selfieshot", {
 		win.appendChild(message);
 		win.appendChild(count);
 		dom.appendChild(win);
-		
+
 		var shutter = document.createElement("audio");
 		shutter.classList.add("shutter");
 		if (this.config.playShutter) {
 			shutter.src = "modules/MMM-Selfieshot/" + this.config.shutterSound;
 		}
 		dom.appendChild(shutter);
-		
+
 		var result = document.createElement("result");
 		result.classList.add("result");
 
@@ -202,7 +202,7 @@ Module.register("MMM-Selfieshot", {
 					option: option,
 					session: session
 				});
-		
+
 				var shutter = document.querySelector("#SELFIE .shutter");
 				if (sound) shutter.play();
 				if (showing) win.classList.toggle("shown");
@@ -252,7 +252,6 @@ Module.register("MMM-Selfieshot", {
 		this.lastPhoto = result;
 		this.showLastPhoto(result);
 	},
-
 
 	showLastPhoto: function(result) {
 		if (this.config.debug) console.log("Showing last photo.");

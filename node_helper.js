@@ -65,6 +65,7 @@ module.exports = NodeHelper.create({
 			this.initialize(payload);
 		}
 		if (noti == "SHOOT") {
+			console.log('shoot payload:', payload)
 			this.shoot(payload);
 		}
 		if (noti == "EMPTY") {
@@ -82,9 +83,9 @@ module.exports = NodeHelper.create({
 		var uri = moment().format("YYMMDD_HHmmss") + ".jpg";
 		var filename = path.resolve(__dirname, "photos", uri);
 		var opts = Object.assign ({
-			width: 1280,
-			height: 720,
-			quality: 100,
+			width: this.config.width ?? 1280,
+			height: this.config.height ?? 720,
+			quality: this.config.quality ?? 100,
 			delay: 0,
 			saveShots: true,
 			output: "jpeg",

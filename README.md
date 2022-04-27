@@ -80,7 +80,7 @@ displayCountdown: true,
 displayResult: true,
 playShutter: true,
 shutterSound: "shutter.mp3",
-useWebEndpoint: "selfie", // This will activate 'https://YOUR_MM_IP_OR_DOMAIN:PORT/selfie [POST]' as web API endpoint.
+useWebEndpoint: "selfie", // This will activate 'http://YOUR_MM_IP_OR_DOMAIN:PORT/selfie [POST]' as web API endpoint.
 resultDuration: 1000 * 5,
 sendTelegramBot: true,
 sendMail: null, // or your email config (option for nodemailer https://nodemailer.com/about/)
@@ -151,7 +151,7 @@ this.sendNotification("SELFIE_SHOOT", {
 - `/lastselfie` : Display last the last photo taken on screen and telegram.
 
 3. by `HTTP Request`
-- This will activate 'https://YOUR_MM_IP_OR_DOMAIN:PORT/selfie [POST]' as web API endpoint.
+- This will activate 'http://YOUR_MM_IP_OR_DOMAIN:PORT/selfie [POST]' as web API endpoint.
 - If you don't need this, set it to `null`.
 
 CURL example;

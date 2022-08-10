@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const NodeWebcam = require( "node-webcam" );
 const moment = require("moment");
 const path = require("path");
@@ -83,9 +84,9 @@ module.exports = NodeHelper.create({
 		var uri = moment().format("YYMMDD_HHmmss") + ".jpg";
 		var filename = path.resolve(__dirname, "photos", uri);
 		var opts = Object.assign ({
-			width: this.config.width ?? 1280,
-			height: this.config.height ?? 720,
-			quality: this.config.quality ?? 100,
+			width: this.config.width,
+			height: this.config.height,
+			quality: this.config.quality,
 			delay: 0,
 			saveShots: true,
 			output: "jpeg",

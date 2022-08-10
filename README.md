@@ -1,5 +1,5 @@
 # MMM-Selfieshot
-Taking a Selfie with USB cam on MagicMirror. (Pi CAM will be supported later.)
+Taking a Selfie with USB web cam or Raspberry Pi camera module on MagicMirror.
 
 ## Screenshot
 ![](https://raw.githubusercontent.com/eouia/MMM-Selfieshot/master/screenshot.png)
@@ -168,7 +168,3 @@ You can use this feature for IFTTT or other program out of MagicMirror.
 
 5. by `MMM-GooglePhotos`
 - Photos will be uploaded to Google Photos album automatically.
-
-
-## TODO
-- Native Pi camera support. (I have no pi camera at this moment, so I can't implement. Or, any PR will be welcome.)

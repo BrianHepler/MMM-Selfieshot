@@ -81,7 +81,8 @@ To place a button on the mirror that you can click or touch, you will have to in
 | shootCountdown | 5 | How many seconds in the countdown before the image is taken. |
 | displayCountdown | true | |
 | displayResult | true | If you set this to `false`, the module will not display what it saw. |
-| rotation | "none" | Rotates the countdown and the resulting photo. Designed for landscape Magic Mirrors. Valid options: "left", "right", "invert" |
+| rotateCountdown | "none" | Rotates the countdown & "shoot message". Designed for landscape Magic Mirrors. Valid options: "left", "right", "invert" |
+| rotatePreview | "none" | Rotates the result image. Designed for landscape Magic Mirrors. Valid options: "left", "right", "invert" |
 | playShutter | true | Play the sound of the camera shutter. |
 | shutterSound | "shutter.mp3" | The sound to play for the shutter. Located in the module main directory. |
 | useWebEndpoint | "selfie" | This will activate 'http://YOUR_MM_IP_OR_DOMAIN:PORT/selfie [POST]' as web API endpoint. |

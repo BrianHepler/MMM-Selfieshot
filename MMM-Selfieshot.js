@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable prettier/prettier */
 Module.register("MMM-Selfieshot", {
 	defaults: {
@@ -19,7 +20,8 @@ Module.register("MMM-Selfieshot", {
 		resultDuration: 1000 * 5,
 		sendTelegramBot: true,
 		sendMail: null, // or your email config (option for nodemailer https://nodemailer.com/about/)
-		rotation: "none" // rotates preview display. "left", "right", "invert" also options
+		rotateCountdown: "none", // rotates countdown display. "left", "right", "invert" also options
+		rotatePreview: "none" // rotates preview display. "left", "right", "invert" also options
 		/*
     sendMail: {
       transport: {
@@ -131,7 +133,7 @@ Module.register("MMM-Selfieshot", {
 		count.classList.add("count");
 		count.innerHTML = this.config.shootCountdown;
 
-		switch (this.config.rotation) {
+		switch (this.config.rotateCountdown) {
 			case "right":
 				win.style.transform = "rotate(90deg)";
 				break;
@@ -201,7 +203,8 @@ Module.register("MMM-Selfieshot", {
 		var showing = (option.hasOwnProperty("displayCountdown")) ? option.displayCountdown : this.config.displayCountdown;
 		var sound = (option.hasOwnProperty("playShutter")) ? option.playShutter : this.config.playShutter;
 		var countdown = (option.hasOwnProperty("shootCountdown")) ? option.shootCountdown : this.config.shootCountdown;
-		var rotate = (option.hasOwnProperty("rotate")) ? option.rotate : this.config.rotate;
+		var rotatePreview = (option.hasOwnProperty("rotatePreview")) ? option.rotatePreview : this.config.rotatePreview;
+		var rotateCountdown = (option.hasOwnProperty("rotateCountdown")) ? option.rotateCountdown : this.config.rotateCountdown;
 		if (option.hasOwnProperty("displayResult")) session["displayResult"] = option.displayResult;
 		var con = document.querySelector("#SELFIE");
 		if (showing) con.classList.toggle("shown");
@@ -275,7 +278,7 @@ Module.register("MMM-Selfieshot", {
 		var rd = document.querySelector("#SELFIE .result");
 		rd.style.backgroundImage = `url(modules/MMM-Selfieshot/photos/${result.uri})`;
 
-		switch (this.config.rotation) {
+		switch (this.config.rotatePreview) {
 			case "right":
 				rd.style.transform = "rotate(90deg)";
 				break;

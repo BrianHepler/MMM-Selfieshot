@@ -200,6 +200,7 @@ Module.register("MMM-Selfieshot", {
 	},
 
 	shoot: function(option={}, session={}) {
+		this.sendNotification("SELFIE_START");
 		var showing = (option.hasOwnProperty("displayCountdown")) ? option.displayCountdown : this.config.displayCountdown;
 		var sound = (option.hasOwnProperty("playShutter")) ? option.playShutter : this.config.playShutter;
 		var countdown = (option.hasOwnProperty("shootCountdown")) ? option.shootCountdown : this.config.shootCountdown;
